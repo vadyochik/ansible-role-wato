@@ -1,0 +1,15 @@
+---
+- name: activate changes
+  set_fact: wato_action_current="activate_changes"
+  changed_when: true
+  notify: run activate changes
+  when: wato_activate_changes and not wato_action == "get_host"
+
+- name: run activate changes
+  uri:
+    url: "{{ wato_webapi_url }}"
+    method: POST
+    body: "request={}"
+    return_content: yes
+  delegate_to: 127.0.0.1
+

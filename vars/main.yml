@@ -1,0 +1,3 @@
+---
+wato_webapi_url: "{{ wato_webapi_base_url }}?action={{ wato_action_current }}&_username={{ wato_webapi_user }}&_secret={{ wato_webapi_password }}{{ wato_additional_parameters | default('') }}"
+

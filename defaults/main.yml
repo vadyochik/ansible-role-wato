@@ -1,0 +1,43 @@
+---
+# automation user
+wato_webapi_user: ""
+
+# automation password
+wato_webapi_password: ""
+
+# Full URL to webapi.py
+wato_webapi_base_url: ""
+
+# Services inventory behaviour
+wato_inventory_mode: "new"
+
+# Host tag group criticality can be one of the following:
+#
+# prod:          Productive system
+# critical:      Business critical
+# test:          Test system
+# offline:       Do not monitor this host
+#
+wato_host_tag_criticality: "prod"
+
+# Host tag group agent can be one of the following:
+#
+# cmk-agent:    Check_MK Agent (Server)
+# snmp-only:    SNMP (Networking device, Appliance)
+# snmp-v1:      Legacy SNMP device (using V1)
+# snmp-tcp:     Dual: Check_MK Agent + SNMP
+# ping:         No Agent
+#
+wato_host_tag_agent: "cmk-agent"
+
+
+# Host tag group networking can be one of the following:
+#
+# lan:          Local network (low latency)
+# wan:          WAN (high latency)
+# dmz:          DMZ (low latency, secure access)
+#
+wato_host_tag_networking: "lan"
+
+# Apply changes in WATO
+wato_activate_changes: True

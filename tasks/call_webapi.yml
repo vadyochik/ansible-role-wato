@@ -1,0 +1,16 @@
+---
+- name: Run specified WATO action
+  uri:
+    url: "{{ wato_webapi_url }}"
+    method: POST
+    body: "request={{ wato_webapi_request | to_json }}"
+    return_content: yes
+  register: wato_action_response
+  delegate_to: 127.0.0.1
+
+- name: Show results of our actions
+  debug: msg="{{ item.key }} = {{ item.value }}"
+  with_dict: "{{ wato_action_response.content }}"
+  changed_when: item.key == "result_code" and item.value|int == 0
+  notify: activate changes
+

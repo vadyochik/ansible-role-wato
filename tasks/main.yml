@@ -1,0 +1,41 @@
+---
+- name: Ensure that we know what to do.
+  fail: msg="Please set wato_action variable either to add_host, delete_host or discover_services"
+  when: wato_action is undefined or wato_action is defined and not (wato_action == "add_host" or wato_action == "delete_host" or wato_action == "discover_services" or wato_action == "get_host")
+ 
+- debug: var=wato_webapi_user verbosity=2
+- debug: var=wato_webapi_password verbosity=3
+- debug: var=wato_webapi_base_url verbosity=2
+
+- name: Define current WATO action
+  set_fact: wato_action_current="{{ wato_action }}"
+
+- name: Define additional parameters for "get_host" action
+  set_fact: wato_additional_parameters="&effective_attributes=1"
+  when: wato_action == "get_host"
+
+- name: Define additional parameters for "discover_services" action
+  set_fact: wato_additional_parameters="&mode={{ wato_inventory_mode }}"
+  when: wato_action == "discover_services"
+
+- name: Define payload for WATO add_host action
+  set_fact:
+    wato_webapi_request:
+      attributes:
+        tag_criticality: "{{ wato_host_tag_criticality }}"
+        tag_agent: "{{ wato_host_tag_agent }}"
+        tag_networking: "{{ wato_host_tag_networking }}"
+        alias: "{{ wato_host_alias | default(inventory_hostname) }}"
+        ipaddress: "{{ ansible_ssh_host }}"
+      folder: "/"
+      hostname: "{{ inventory_hostname }}"
+  when: wato_action == "add_host"
+
+- name: Define payload for other WATO actions
+  set_fact:
+    wato_webapi_request:
+      hostname: "{{ inventory_hostname }}"
+  when: not wato_action == "add_host"
+
+- include: call_webapi.yml
+
