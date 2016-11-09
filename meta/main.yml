@@ -1,0 +1,21 @@
+galaxy_info:
+  author: Vadym Agarkov
+  description: Manage chack_mk hosts via WATO webapi
+
+  license: BSD
+
+  min_ansible_version: 2.1
+
+  platforms:
+    - name: EL
+      versions:
+      - 6
+      - 7
+    - name: Debian
+      versions:
+      - all
+    - name: Ubuntu
+      versions:
+      - all
+
+dependencies: []
